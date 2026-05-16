@@ -37,7 +37,7 @@ export default function Hero() {
         </p>
 
         <div className={styles.names} data-delay="500">
-          <span className={styles.name}>Sophia</span>
+          <span className={styles.name}>Sophiaaa</span>
           <span className={styles.ampersand}>&amp;</span>
           <span className={styles.name}>Alexander</span>
         </div>
