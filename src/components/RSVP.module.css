@@ -1,0 +1,236 @@
+.section {
+  padding: 5rem 2rem;
+  background: var(--ivory);
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.inner {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  text-align: center;
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--warm-gray);
+  margin-bottom: 2.5rem;
+  font-size: 0.95rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.field label {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+}
+
+.optional {
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 300;
+  color: var(--warm-gray);
+  font-size: 0.75em;
+}
+
+.field input,
+.field select,
+.field textarea {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  color: var(--charcoal);
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--gold-light);
+  padding: 0.5rem 0;
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+  -webkit-appearance: none;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-bottom-color: var(--gold);
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: var(--gold-light);
+  font-style: italic;
+}
+
+.field textarea {
+  resize: none;
+}
+
+/* Radio group */
+.radioGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding-top: 0.25rem;
+}
+
+.radioLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  color: var(--charcoal);
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 300;
+}
+
+.radioLabel input[type="radio"] {
+  display: none;
+}
+
+.radioCustom {
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+.radioLabel input[type="radio"]:checked + .radioCustom {
+  background: var(--gold);
+  box-shadow: inset 0 0 0 3px var(--ivory);
+}
+
+/* Submit */
+.submit {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ivory);
+  background: var(--charcoal);
+  border: 1px solid var(--charcoal);
+  padding: 1rem 3rem;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  align-self: center;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.submit::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gold-dark);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+  z-index: 0;
+}
+
+.submit:hover::before {
+  transform: scaleX(1);
+}
+
+.submit:hover {
+  border-color: var(--gold-dark);
+}
+
+.submit span,
+.submit {
+  position: relative;
+  z-index: 1;
+}
+
+.submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Success state */
+.success {
+  text-align: center;
+  padding: 3rem 2rem;
+  border: 1px solid var(--gold-light);
+  background: linear-gradient(135deg, rgba(201,169,110,0.05), transparent);
+}
+
+.successIcon {
+  font-size: 2.5rem;
+  color: var(--rose);
+  margin-bottom: 1rem;
+  animation: pulse 2s ease infinite;
+}
+
+.success h3 {
+  font-family: var(--font-serif);
+  font-size: 1.75rem;
+  font-weight: 300;
+  font-style: italic;
+  margin-bottom: 0.75rem;
+  color: var(--charcoal);
+}
+
+.success p {
+  font-family: var(--font-serif);
+  color: var(--warm-gray);
+  font-style: italic;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.errorMsg {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: #b94a48;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .row { grid-template-columns: 1fr; }
+}

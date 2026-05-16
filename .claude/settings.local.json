@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install *)",
+      "Bash(npx tailwindcss *)",
+      "Bash(npm run *)",
+      "Bash(npm list *)",
+      "Bash(Get-Content \"C:\\\\Users\\\\sumet\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Users-sumet-Downloads-wedding-invitation-wedding-invitation\\\\9f0063e1-ad0b-4f98-a94d-2b05ae2738ff\\\\tasks\\\\bddoeloqt.output\")"
+    ]
+  }
+}

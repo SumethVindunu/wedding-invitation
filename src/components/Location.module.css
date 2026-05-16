@@ -1,0 +1,127 @@
+.section {
+  padding: 5rem 2rem;
+  background: var(--cream);
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  position: relative;
+}
+
+.section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 200px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.section > * {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.content {
+  max-width: none;
+}
+
+.title {
+  margin-bottom: 2rem;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.detailItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.detailIcon {
+  font-size: 1.2rem;
+  color: var(--gold);
+  margin-top: 0.1rem;
+  flex-shrink: 0;
+}
+
+.detailItem strong {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 0.2rem;
+  color: var(--charcoal);
+}
+
+.detailItem p {
+  font-size: 0.875rem;
+  color: var(--warm-gray);
+  font-style: italic;
+  font-family: var(--font-serif);
+}
+
+.directions {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  text-decoration: none;
+  border-bottom: 1px solid var(--gold);
+  padding-bottom: 2px;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.directions:hover {
+  color: var(--charcoal);
+  border-color: var(--charcoal);
+}
+
+.mapWrap {
+  border: 1px solid var(--gold-light);
+  overflow: hidden;
+  position: relative;
+}
+
+.mapWrap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 4px solid var(--ivory);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.map {
+  height: 420px;
+  width: 100%;
+  z-index: 1;
+}
+
+@media (max-width: 850px) {
+  .section {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 4rem 1.5rem;
+  }
+  .map { height: 300px; }
+}
