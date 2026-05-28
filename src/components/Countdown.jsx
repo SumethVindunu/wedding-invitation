@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styles from './Countdown.module.css'
 import { useInView } from '../hooks/useInView'
 
-const WEDDING_DATE = new Date('2026-05-19T16:00:00')
+const WEDDING_DATE = new Date('2026-06-19T16:00:00')
 
 function pad(n) {
   return String(n).padStart(2, '0')
