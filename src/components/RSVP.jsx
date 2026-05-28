@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styles from './RSVP.module.css'
 import { useInView } from '../hooks/useInView'
+import supabase from '../lib/supabaseClient'
 
 export default function RSVP() {
   const [ref, inView] = useInView()
@@ -12,74 +13,66 @@ export default function RSVP() {
 
     const formData = new FormData(event.target)
 
-    // Get form values
-    const name = formData.get("name")
-    const phone = formData.get("phone")
+    const name = formData.get("name")?.toString().trim()
+    const phone = formData.get("phone")?.toString().trim()
     const attending = formData.get("attending")
     const guests = formData.get("guests")
-    const dietary = formData.get("dietary")
-    const message = formData.get("message")
+    const dietary = formData.get("dietary")?.toString().trim()
+    const message = formData.get("message")?.toString().trim()
 
-    // Web3Forms Access Key
-    formData.append(
-      "access_key",
-      "595dd688-5dbc-4cb7-bd2f-c644196c856a"
-    )
+    // Validation
+    if (!name || !phone || !attending) {
+      setResult("❌ Please fill in all required fields (Name, Phone, and Attendance).")
+      return
+    }
+
+    const finalGuests = attending === 'Regretfully decline' ? 0 : parseInt(guests) || 1
 
     try {
-      const response = await fetch(
-        "https://api.web3forms.com/submit",
-        {
-          method: "POST",
-          body: formData
-        }
-      )
+      const { error } = await supabase
+        .from("sumeth")
+        .insert([
+          {
+            name,
+            phone,
+            attending,
+            guests: finalGuests,
+            dietary: dietary || null,
+            message: message || null
+          }
+        ])
 
-      const data = await response.json()
+      if (error) {
+        console.error("Supabase error details:", error)
+        setResult(`❌ Database Error: ${error.message || "Failed to save RSVP"}`)
+        return
+      }
 
-      if (data.success) {
-        setResult("✅ Thank you! Your RSVP has been sent.")
+      setResult("✅ Thank you! Your RSVP has been saved.")
+      event.target.reset()
 
-        // Reset form
-        event.target.reset()
-
-        // ===================================
-        // WhatsApp Message Integration
-        // ===================================
-
-        // Replace with your WhatsApp number
-        // Example: 94771234567
-        const whatsappNumber = "94714996108"
-
-        // Create WhatsApp message
-        const whatsappMessage = `
-🎉 New RSVP Received
+      // WhatsApp Message Integration
+      const whatsappNumber = "94714996108"
+      const whatsappMessage = `🎉 New RSVP Received
 
 👤 Name: ${name}
 📞 Phone: ${phone}
 ✅ Attendance: ${attending}
-👥 Guests: ${guests}
+👥 Guests: ${finalGuests}
 🍽 Dietary: ${dietary || "None"}
 
 💌 Message:
-${message || "No message"}
-        `
+${message || "No message"}`
 
-        // Encode message
-        const encodedMessage = encodeURIComponent(whatsappMessage)
+      const encodedMessage = encodeURIComponent(whatsappMessage)
+      window.open(
+        `https://wa.me/${whatsappNumber}?text=${encodedMessage}`,
+        "_blank"
+      )
 
-        // Open WhatsApp
-        window.open(
-          `https://wa.me/${whatsappNumber}?text=${encodedMessage}`,
-          "_blank"
-        )
-
-      } else {
-        setResult("❌ Oops! Something went wrong. Please try again.")
-      }
     } catch (error) {
-      console.error(error)
-      setResult("❌ Error submitting form")
+      console.error("Submission error:", error)
+      setResult("❌ Error submitting form. Please try again.")
     }
   }
 
